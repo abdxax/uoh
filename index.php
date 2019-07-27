@@ -53,33 +53,37 @@ echo "string";
           <?php
             if (isset($_SESSION['email'])) {
               echo '  <a href="create_an_adv.php"> إنشاء إعلان </a>';
+              echo '<a href="logout.php">سجيل خروج </a>';
             }
-          
-          ?>
-         <a href="signup.php"> التسجيل </a>
-         <button id="loginbtn" onclick="document.getElementById('id01').style.display='block'">تسجيل الدخول </button>
-         <div id="id01" class="modal">
-         <form class="modal-content" method="POST">
-         <div class="container">
+            else{
+              echo "<a href=signup.php> التسجيل </a>
+         <button id=loginbtn onclick=document.getElementById('id01').style.display='block'>تسجيل الدخول </button>
+         <div id=id01 class=modal>
+         <form class=modal-content method=POST>
+         <div class=container>
          <h1>تسجيل الدخول </h1>
            <hr>
-         <label class="label" for="email"><b>البريد الإلكتروني:  </b></label>
+         <label class=label for=email><b>البريد الإلكتروني:  </b></label>
          <br>
-         <input class="input" type="text" placeholder="اكتب بريدك الإلكتروني " name="email" required>
+         <input class=input type=text placeholder=اكتب بريدك الإلكتروني  name=email required>
          <br>
-       <label class="label"for="psw"><b>  كلمة المرور : </b></label>
+       <label class=labelfor=psw><b>  كلمة المرور : </b></label>
        <br>
-       <input class="input" type="password" placeholder="اكتب كلمة المرور " name="psw" required>
+       <input class=input type=password placeholder=اكتب كلمة المرور  name=psw required>
 
       <div >
         
-        <button class="loginbtn" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">إلغاء </button>
-       <!-- <button class="loginbtn" type="submit" class="signup">تسجيل الدخول</button>-->
-       <input type="submit" name="sub_login" class="signup" value="سجيل الدخول">
+        <button class=loginbtn type=button onclick=document.getElementById('id01').style.display='none' class=cancelbtn>إلغاء </button>
+       <!-- <button class=loginbtn type=submit class=signup>تسجيل الدخول</button>-->
+       <input type=submit name=sub_login class=signup value=سجيل الدخول>
       </div>
     </div>
   </form>
-</div>
+</div>";
+            }
+          
+          ?>
+        
 <script>
 // Get the modal
 var modal = document.getElementById('id01');
