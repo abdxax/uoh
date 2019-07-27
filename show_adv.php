@@ -1,6 +1,23 @@
 <?php
 session_start();
 require "connect.php";
+$id_adv=$_GET['id'];
+if (isset($_POST['submit_comment'])) {
+  # code...
+  $comments=$_POST['comment_area'];
+  $emails=$_SESSION['email'];
+  $sql_add_comment="INSERT INTO comment(Content,Adv_ID,User_Name)VALUES('$comments','$id_adv','$emails')";
+  if (mysqli_query($conn,$sql_add_comment)) {
+    
+    echo "string";
+  }
+  else{
+    echo "eee";
+  }
+}
+
+$sql_adv_show="SELECT * FROM advertising LEFT JOIN user ON advertising.Uname=user.Email WHERE advertising.Adv_ID='$id_adv'";
+$res=mysqli_query($conn,$sql_adv_show);
 ?>
 <!DOCTYPE html>
 <html dir="rtl">
@@ -41,7 +58,7 @@ require "connect.php";
          <a href="signup.php"> التسجيل </a>
          <button id="loginbtn" onclick="document.getElementById('id01').style.display='block'">تسجيل الدخول </button>
          <div id="id01" class="modal">
-         <form class="modal-content" action="/action_page.php">
+         <form class="modal-content" method="POST" action="index.php">
          <div class="container">
          <h1>تسجيل الدخول </h1>
            <hr>
@@ -54,8 +71,10 @@ require "connect.php";
        <input class="input" type="password" placeholder="اكتب كلمة المرور " name="psw" required>
 
       <div >
+        
         <button class="loginbtn" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">إلغاء </button>
-        <button class="loginbtn" type="submit" class="signup">تسجيل الدخول</button>
+       <!-- <button class="loginbtn" type="submit" class="signup">تسجيل الدخول</button>-->
+       <input type="submit" name="sub_login" class="signup" value="سجيل الدخول">
       </div>
     </div>
   </form>
@@ -77,7 +96,7 @@ window.onclick = function(event) {
 
 <br>
       <div class="advs_box">
-      <div class="adv_box">
+     <!-- <div class="adv_box">
         <p class="user_adv_title">عنوان الإعلان </p>
         <hr>
         <p class="user_data">اسم المعلن</p>
@@ -98,7 +117,57 @@ window.onclick = function(event) {
           <hr>
           <span class="time">11:05</span>
         </div>
+      </div>-->
+      <?php
+      while($ro=mysqli_fetch_array($res)){
+        echo '
+              <div class="adv_box">
+        <p class="user_adv_title">'.$ro['Title'].'</p>
+        <hr>
+        <p class="user_data">اسم المعلن : '.$ro['User_Name'].'</p>
+        <p class="user_data">المنطقه :'.$ro['City'].'</p>
       </div>
+      <div class="adv_box">
+      <img class="adv_img"src='.$ro['Picture'].' alt="">
+      </div>
+      <div class="adv_box">
+        <h5>الوصف:</h5>
+        <p>'.$ro['Description'].'</p>
+      </div>';
+
+$sql_comm="SELECT * FROM comment LEFT JOIN user ON comment.User_Name=user.email WHERE comment.Adv_ID='$id_adv' ";
+$res_sql=mysqli_query($conn,$sql_comm);
+if (mysqli_num_rows($res_sql)>0) {
+ while($row=mysqli_fetch_array($res_sql)){
+  echo '<div class="adv_box">
+        <div class="reply_container">
+          <p class="user_data">'.$row['User_Name'].'</p>
+          <hr>
+          <p>'.$row['Content'].'</p>
+          <hr>
+          <span class="time">11:05</span>
+        </div>
+      </div>
+        ';
+ }
+}
+      
+      }
+
+      ?>
+      <?php
+        if (isset($_SESSION['email'])) {
+          echo '<div class="adv_box">
+        <div class="reply_container">
+          <p class="user_data">اضف تعليق</p>
+          <form  method="post">
+            <textarea name="comment_area" rows="10" cols="100"placeholder="من فضلك اكتب تعليقك هنا ......"></textarea>
+            <input type="submit" name="submit_comment" value="انشر التعليق">
+          </form>
+        </div>
+      </div>';
+        }
+      ?>
     </div>
 
     <!--footer-->

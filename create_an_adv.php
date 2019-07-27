@@ -1,4 +1,5 @@
 <?php
+session_start();
 require "connect.php";
 if (isset($_FILES['uploadimge'])) {
   # code...
@@ -16,7 +17,8 @@ if (isset($_FILES['uploadimge'])) {
      $city=$_POST['city'];
      $des=$_POST['describtion'];
      $cag=$_POST['adv_section'];
-     $sql_add="INSERT INTO  advertising(Title,City,Picture,Description,Category_ID,Uname)VALUES('$title','$city','$path','$des','$cag','test')";
+     $user=$_SESSION['email'];
+     $sql_add="INSERT INTO  advertising(Title,City,Picture,Description,Category_ID,Uname)VALUES('$title','$city','$path','$des','$cag','$user')";
      if (mysqli_query($conn,$sql_add)) {
        # code...
      }

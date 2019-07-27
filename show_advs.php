@@ -47,7 +47,7 @@ if (isset($_GET['id'])) {
          <a href="signup.php"> التسجيل </a>
          <button id="loginbtn" onclick="document.getElementById('id01').style.display='block'">تسجيل الدخول </button>
          <div id="id01" class="modal">
-         <form class="modal-content" action="/action_page.php">
+         <form class="modal-content" method="POST" action="index.php">
          <div class="container">
          <h1>تسجيل الدخول </h1>
            <hr>
@@ -60,8 +60,10 @@ if (isset($_GET['id'])) {
        <input class="input" type="password" placeholder="اكتب كلمة المرور " name="psw" required>
 
       <div >
+        
         <button class="loginbtn" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">إلغاء </button>
-        <button class="loginbtn" type="submit" class="signup">تسجيل الدخول</button>
+       <!-- <button class="loginbtn" type="submit" class="signup">تسجيل الدخول</button>-->
+       <input type="submit" name="sub_login" class="signup" value="سجيل الدخول">
       </div>
     </div>
   </form>
@@ -173,6 +175,7 @@ while ($rows=mysqli_fetch_array($res)) {
   # code...
   echo '
 <div class="adv_container">
+<a href="show_adv.php?id='.$rows['Adv_ID'].'">
      <div class="img_adv_container">
       <img src='.$rows['Picture'].' alt="Mountains" style="width:100%">
      </div>
@@ -180,6 +183,7 @@ while ($rows=mysqli_fetch_array($res)) {
       <h4 class="title_of_adv">'.$rows['Title'].'</h4>
       <p class="user_name">اسم المعلن </p>
      </div>
+     </a>
    </div>
   ';
 }

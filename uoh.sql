@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 27 يوليو 2019 الساعة 01:36
+-- Generation Time: 27 يوليو 2019 الساعة 17:32
 -- إصدار الخادم: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -43,7 +43,7 @@ CREATE TABLE `advertising` (
 --
 
 INSERT INTO `advertising` (`Adv_ID`, `Title`, `City`, `Picture`, `Description`, `Category_ID`, `Uname`) VALUES
-(2, 'TYTGHG', '', 'drees1.jpeg', 'GHGHG', 3, 'test');
+(2, 'TYTGHG', 'r', 'drees1.jpeg', 'GHGHG', 3, 'ah@psau.com');
 
 -- --------------------------------------------------------
 
@@ -74,9 +74,16 @@ INSERT INTO `category` (`Category_ID`, `Category_Name`, `Adv-id`) VALUES
 CREATE TABLE `comment` (
   `Comment_ID` int(11) NOT NULL,
   `Content` text NOT NULL,
-  `Adv-ID` int(11) NOT NULL,
+  `Adv_ID` int(11) NOT NULL,
   `User_Name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `comment`
+--
+
+INSERT INTO `comment` (`Comment_ID`, `Content`, `Adv_ID`, `User_Name`) VALUES
+(5, 'gdgdfgdfg', 2, 'ah@psau.com');
 
 -- --------------------------------------------------------
 
@@ -88,18 +95,16 @@ CREATE TABLE `user` (
   `User_Name` varchar(50) NOT NULL,
   `Password` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL,
-  `PhonNo` int(10) NOT NULL,
-  `Comment_ID` int(11) DEFAULT NULL,
-  `Adv_ID` int(11) DEFAULT NULL
+  `PhonNo` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- إرجاع أو استيراد بيانات الجدول `user`
 --
 
-INSERT INTO `user` (`User_Name`, `Password`, `Email`, `PhonNo`, `Comment_ID`, `Adv_ID`) VALUES
-('22amal', '1234', 'amal@gmail.com', 501234567, NULL, NULL),
-('dfdfdf', '123', 'ah@psau.com', 2323232, NULL, NULL);
+INSERT INTO `user` (`User_Name`, `Password`, `Email`, `PhonNo`) VALUES
+('22amal', '1234', 'amal@gmail.com', 501234567),
+('dfdfdf', '123', 'ah@psau.com', 2323232);
 
 --
 -- Indexes for dumped tables
@@ -125,16 +130,14 @@ ALTER TABLE `category`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`Comment_ID`),
-  ADD KEY `FK_advID_com` (`Adv-ID`),
+  ADD KEY `FK_advID_com` (`Adv_ID`),
   ADD KEY `FK_username_com` (`User_Name`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`User_Name`),
-  ADD KEY `FK_comID_user` (`Comment_ID`),
-  ADD KEY `FK_advID_user` (`Adv_ID`);
+  ADD PRIMARY KEY (`User_Name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -156,23 +159,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `Comment_ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- قيود الجداول المحفوظة
---
-
---
--- القيود للجدول `comment`
---
-ALTER TABLE `comment`
-  ADD CONSTRAINT `FK_username_com` FOREIGN KEY (`User_Name`) REFERENCES `user` (`User_Name`);
-
---
--- القيود للجدول `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `FK_advID_user` FOREIGN KEY (`Adv_ID`) REFERENCES `advertising` (`Adv_ID`);
+  MODIFY `Comment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
