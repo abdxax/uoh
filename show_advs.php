@@ -1,11 +1,17 @@
 <?php
 require "connect.php";
 $ids;
+$depa='';
 if (isset($_GET['id'])) {
   # code...
   $ids=$_GET['id'];
   $sql_adv="SELECT * FROM advertising LEFT JOIN user ON advertising.Uname=user.Email  WHERE advertising.Category_ID='$ids'";
   $res=mysqli_query($conn,$sql_adv);
+  $sql_depa="SELECT * FROM category WHERE Category_ID='$ids'";
+  $resu_dep=mysqli_query($conn,$sql_depa);
+  while($rows_d=mysqli_fetch_array($resu_dep)){
+    $depa=$rows_d['Category_Name'];
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -120,7 +126,7 @@ window.onclick = function(event) {
 
     <div >
       <div class="title">
-        <h1>الفساتين </h1>
+        <h1><?php echo $depa;?></h1>
         <hr>
       </div>
     <div class="all_adv">
